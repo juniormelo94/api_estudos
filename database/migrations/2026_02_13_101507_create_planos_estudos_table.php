@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('planos_estudos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('status');
+            $table->integer('criado_por');
+            $table->integer('atualizado_por')->nullable();
             $table->timestamps();
         });
     }

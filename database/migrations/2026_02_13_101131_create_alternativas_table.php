@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('alternativas', function (Blueprint $table) {
             $table->id();
+            $table->longText('texto')->nullable();
+            $table->longText('img')->nullable();
+            $table->bigInteger('questoes_id')
+                  ->unsigned();
+            $table->foreign('questoes_id')
+                  ->references('id')
+                  ->on('questoes')
+                  ->onDelete('cascade');
+            $table->string('status');
+            $table->integer('criado_por');
+            $table->integer('atualizado_por')->nullable();
             $table->timestamps();
         });
     }

@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('provas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->bigInteger('modelos_provas_id')
+                  ->unsigned();
+            $table->foreign('modelos_provas_id')
+                  ->references('id')
+                  ->on('modelos_provas')
+                  ->onDelete('cascade');
+           $table->string('status');
+            $table->integer('criado_por');
+            $table->integer('atualizado_por')->nullable();
             $table->timestamps();
         });
     }

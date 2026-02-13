@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('disciplinas', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('descricao')->nullable();
+            $table->string('abreviacao');
+            $table->string('status');
+            $table->integer('criado_por');
+            $table->integer('atualizado_por')->nullable();
             $table->timestamps();
         });
     }

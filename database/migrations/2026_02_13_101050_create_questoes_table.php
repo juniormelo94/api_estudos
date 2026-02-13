@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('questoes', function (Blueprint $table) {
             $table->id();
+            $table->longText('texto')->nullable();
+            $table->longText('img')->nullable();
+            $table->integer('alternativa_correta');
+            $table->bigInteger('disciplinas_id')
+                  ->unsigned();
+            $table->foreign('disciplinas_id')
+                  ->references('id')
+                  ->on('disciplinas')
+                  ->onDelete('cascade');
+            $table->string('status');
+            $table->integer('criado_por');
+            $table->integer('atualizado_por')->nullable();
             $table->timestamps();
         });
     }
