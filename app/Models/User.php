@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\ColaboradoresUsers;
 
 class User extends Authenticatable
 {
@@ -45,19 +44,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    /**
-     * Get the record associated with the ColaboradoresUsers.
-     *
-     * @version 1.0.0
-     * @author Junior Melo
-     * @author 
-     *
-     * @return ColaboradoresUsers::class
-     */
-    public function colaborador_user()
-    {
-        return $this->hasOne(ColaboradoresUsers::class, 'users_id', 'id');
     }
 }

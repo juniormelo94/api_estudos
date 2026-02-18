@@ -11,24 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modelos_provas_disciplinas', function (Blueprint $table) {
+        Schema::create('provas_usuarios_respostas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('modelos_provas_id')
+            $table->bigInteger('provas_usuarios_id')
                   ->unsigned();
-            $table->foreign('modelos_provas_id')
+            $table->foreign('provas_usuarios_id')
                   ->references('id')
-                  ->on('modelos_provas')
+                  ->on('provas_usuarios')
                   ->onDelete('cascade');
-            $table->bigInteger('disciplinas_id')
+            $table->bigInteger('questoes_id')
                   ->unsigned();
-            $table->foreign('disciplinas_id')
+            $table->foreign('questoes_id')
                   ->references('id')
-                  ->on('disciplinas')
+                  ->on('questoes')
                   ->onDelete('cascade');
-            $table->integer('qtd_questoes');
-            $table->string('status');
-            $table->integer('criado_por');
-            $table->integer('atualizado_por')->nullable();
+            $table->integer('alternativa_marcada')->nullable();
+            $table->boolean('acertou')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modelos_provas_disciplinas');
+        Schema::dropIfExists('provas_usuarios_respostas');
     }
 };

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->longText('texto')->nullable();
             $table->longText('img')->nullable();
-            $table->integer('alternativa_correta');
             $table->bigInteger('disciplinas_id')
                   ->unsigned();
             $table->foreign('disciplinas_id')

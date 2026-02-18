@@ -68,7 +68,7 @@ class LogsRepository implements RepositoryInterface
         $log->arquivo_erro = $th->getFile();
         $log->linha_erro = $th->getLine();
         $log->rastreamento_erro = $th->getTraceAsString();
-        $log->criado_por = Auth::check() ? Auth::user()->colaborador_user?->colaborador->cpf; : 'Usuário não logado';
+        $log->criado_por = Auth::check() ? Auth::user()->id : 0;
         $log->save();
     }
 

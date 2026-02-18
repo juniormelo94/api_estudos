@@ -2,20 +2,18 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
-use App\Models\ColaboradoresUsers;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Disciplinas;
 use App\Interfaces\RepositoryInterface;
 
-class UserRepository implements RepositoryInterface
+class DisciplinasRepository implements RepositoryInterface
 {
     /**
      * Store a newly created resource in storage.
      *
-     * @param App\Models\User $model
+     * @param App\Models\Disciplinas $model
      * @return void
      */
-    public function __construct(protected User $model)
+    public function __construct(protected Disciplinas $model)
     {
     }
 
@@ -35,17 +33,22 @@ class UserRepository implements RepositoryInterface
                   ->whereDate('created_at', '<=', $request->criado_ate);
         }
 
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
         if ($request->has('pesquisar')) {
-            $query->where('name', 'like', "%$request->pesquisar%")
-                  ->orWhere('email', 'like', "%$request->pesquisar%");
+            $query->where('nome', 'like', "%$request->pesquisar%")
+                  ->orWhere('descricao', 'like', "%$request->pesquisar%")
+                  ->orWhere('abreviacao', 'like', "%$request->pesquisar%");
         }
 
         if ($request->has('por_pagina')) {
-            return $query->orderBy('name', 'asc')
+            return $query->orderBy('nome', 'asc')
                          ->paginate($request->por_pagina);
         }
 
-        return $query->orderBy('name', 'asc')
+        return $query->orderBy('nome', 'asc')
                      ->get();
     }
 
@@ -57,13 +60,15 @@ class UserRepository implements RepositoryInterface
      */
     public function create($request)
     {
-        $user = $this->model;
+        $disciplina = $this->model;
 
-        return tap($user, function ($user) use ($request) {
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
+        return tap($disciplina, function ($disciplina) use ($request) {
+            $disciplina->nome = $request->nome;
+            $disciplina->descricao = $request->descricao;
+            $disciplina->abreviacao = $request->abreviacao;
+            $disciplina->status = $request->status;
+            $disciplina->criado_por = $request->user()->id;
+            $disciplina->save();
         });
     }
 
@@ -87,17 +92,15 @@ class UserRepository implements RepositoryInterface
      */
     public function update($request, $id)
     {
-        $user = $this->model->findOrFail($id);
+        $disciplina = $this->model->findOrFail($id);
 
-        return tap($user, function ($user) use ($request) {
-            if($request->has('password'))
-            {
-                $request->merge([
-                    'password' => Hash::make($request->password)
-                ]);
-            }
+        return tap($disciplina, function ($disciplina) use ($request) {
+            $request->merge([
+                'atualizado_por' => $request->user()->id,
+            ]);
 
-            $user->update($request->all());
+            // Atualizando dados do modelo de prova
+            $disciplina->update($request->except(['criado_por']));
         });
     }
 
@@ -109,8 +112,8 @@ class UserRepository implements RepositoryInterface
      */
     public function delete($id)
     {
-        $user = $this->model->findOrFail($id);
+        $disciplina = $this->model->findOrFail($id);
 
-        return $user->delete();
+        return $disciplina->delete();
     }
 }

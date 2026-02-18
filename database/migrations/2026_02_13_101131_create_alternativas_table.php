@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('texto')->nullable();
             $table->longText('img')->nullable();
+            $table->boolean('resposta_correta')->default(false);
             $table->bigInteger('questoes_id')
                   ->unsigned();
             $table->foreign('questoes_id')

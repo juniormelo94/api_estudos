@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('arquivo_erro');
             $table->string('linha_erro');
             $table->longText('rastreamento_erro');
-            $table->string('criado_por');
+            $table->integer('criado_por');
             $table->timestamps();
         });
     }

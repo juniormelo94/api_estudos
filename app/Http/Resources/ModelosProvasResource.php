@@ -14,6 +14,16 @@ class ModelosProvasResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'status' => $this->status,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
+            'modelos_provas_disciplinas' =>
+                ModelosProvasDisciplinasResource::collection(
+                    $this->whenLoaded('modelos_provas_disciplinas')
+            )
+        ];
     }
 }

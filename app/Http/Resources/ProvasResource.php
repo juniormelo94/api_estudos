@@ -14,6 +14,17 @@ class ProvasResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'modelos_provas_id' => $this->modelos_provas_id,
+            'status' => $this->status,
+            // 'created_at' => $this->created_at,
+            // 'updated_at' => $this->updated_at,
+            'provas_questoes' =>
+                ProvasQuestoesResource::collection(
+                    $this->whenLoaded('provas_questoes')
+            )
+        ];
     }
 }
