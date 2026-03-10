@@ -60,7 +60,7 @@ class ModelosProvasRequest extends FormRequest
             'modelos_provas_disciplinas.*.disciplinas_id.exists' => 'A disciplina com id :input não existe.',
             'modelos_provas_disciplinas.*.qtd_questoes.required' => 'A quantidade de questões dos modelos disciplinas são obrigatórios.',
             'modelos_provas_disciplinas.*.qtd_questoes.integer' => 'A quantidade de questões dos modelos disciplinas precisam ser no formato inteiro.',
-            'modelos_provas_disciplinas.*.qtd_questoes.min' => 'A quantidade de questões dos modelos disciplinas devem conter o valor mínimo de 1 caractere.',
+            'modelos_provas_disciplinas.*.qtd_questoes.min' => 'A quantidade de questões dos modelos disciplinas devem ser maior que 0.',
             'modelos_provas_disciplinas.*.status.required' => 'O status dos modelos disciplinas são obrigatórios',
             'modelos_provas_disciplinas.*.status.string' => 'O status dos modelos disciplinas precisam ser no formato inteiro.',
         ];
